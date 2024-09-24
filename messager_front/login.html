@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            box-sizing: border-box;
+        }
+
+        #login-btn {
+            background-color: #007BFF;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        #login-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div id="chat-app">
+        <div id="login-section" class="active">
+            <h2>Login</h2>
+            <input type="text" id="login" placeholder="Enter your login" />
+            <input type="password" id="password" placeholder="Enter your password" />
+            <button id="login-btn">Login</button>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('login-btn').addEventListener('click', async () => {
+            const login = document.getElementById('login').value;
+            const password = document.getElementById('password').value;
+
+            if (login && password) {
+                try {
+                    const response = await fetch('http://localhost:8080/api/v1/user', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ login, password })
+                    });
+
+                    if (response.ok) {
+                        const user = await response.json();
+                        localStorage.setItem('currentUser', JSON.stringify(user));
+                        window.location.href = 'chat.html';
+                    } else {
+                        alert('Invalid login or password.');
+                    }
+                } catch (error) {
+                    console.error('Error during login:', error);
+                    alert('An error occurred. Please try again.');
+                }
+            } else {
+                alert('Please fill in both fields.');
+            }
+        });
+
+        // Если пользователь уже залогинен
+        if (localStorage.getItem('currentUser')) {
+            window.location.href = 'chat.html';
+        }
+    </script>
+</body>
+</html>

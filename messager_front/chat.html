@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        #chat-app {
+            display: flex;
+            flex-direction: column;
+            height: 90vh;
+            width: 1000px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #header {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        #header #user-login {
+            margin-right: 10px;
+        }
+
+        #main-content {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        #chat-list {
+            width: 30%;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-right: 1px solid #ddd;
+            overflow-y: auto;
+            box-sizing: border-box;
+        }
+
+        #message-section {
+            width: 70%;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            box-sizing: border-box;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        #messages {
+            flex: 1;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f4f4f4;
+            margin-bottom: 10px;
+            padding: 10px;
+            box-sizing: border-box;
+            max-height: calc(100% - 60px); /* Adjusted to account for the height of user-actions */
+        }
+
+        #user-actions {
+            display: flex;
+            gap: 10px;
+            padding: 10px;
+            background: white;
+            border-top: 1px solid #ddd;
+            box-sizing: border-box;
+        }
+
+        #message-input {
+            flex-grow: 1;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        #send-message-btn {
+            padding: 10px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        #send-message-btn:hover {
+            background-color: #0056b3;
+        }
+
+        h3, h4 {
+            text-align: center;
+            color: #333;
+            margin: 0;
+        }
+
+        #create-chat-section {
+            margin-bottom: 20px;
+        }
+
+        .chat-item {
+            padding: 10px;
+            background-color: #f4f4f4;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+
+        .chat-item:hover {
+            background-color: #e0e0e0;
+        }
+
+        .message-item {
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 5px;
+        }
+
+        .message-item strong {
+            color: #007BFF;
+        }
+    </style>
+</head>
+<body>
+    <div id="chat-app">
+        <div id="header">
+            <span id="user-login"></span>
+            <button id="logout-btn">Logout</button>
+        </div>
+        <div id="main-content">
+            <div id="chat-list">
+                <div id="create-chat-section">
+                    <input type="text" id="new-member" placeholder="Enter username to chat with" />
+                    <button id="create-chat-btn">Create Chat</button>
+                </div>
+                <h3>Your Chats</h3>
+                <div id="chats"></div>
+            </div>
+            <div id="message-section">
+                <h3>Messages</h3>
+                <div id="messages"></div>
+                <div id="user-actions">
+                    <input type="text" id="message-input" placeholder="Enter your message" />
+                    <button id="send-message-btn">Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Подключаем необходимые библиотеки -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.0/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    
+    <script src="app.js"></script>
+</body>
+</html>
